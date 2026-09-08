@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>GO BRICK BREAKER</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+<body>
+
+<div class="game-container">
+
+    <header class="game-header">
+
+        <h1>GO BRICK BREAKER</h1>
+
+        <div class="game-stats">
+
+            <span>
+                LEVEL:
+                <strong id="level">1</strong>
+            </span>
+
+            <span>
+                SCORE:
+                <strong id="score">0</strong>
+            </span>
+
+            <span>
+                BEST:
+                <strong id="highScore">0</strong>
+            </span>
+
+            <span>
+                LIVES:
+                <strong id="lives">3</strong>
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <main class="game-area">
+
+        <canvas id="gameCanvas"></canvas>
+
+
+        <!-- ==========================================
+             TOP GAME CONTROLS
+             ========================================== -->
+
+        <div class="game-controls">
+
+            <button id="pauseButton">
+                ⏸
+            </button>
+
+            <button id="soundButton">
+                🔊
+            </button>
+
+            <button id="menuButton">
+                ⌂
+            </button>
+
+        </div>
+
+
+        <!-- ==========================================
+             POWER-UP STATUS
+             ========================================== -->
+
+        <div
+            id="powerUpStatus"
+            class="power-up-status hidden"
+        >
+
+            POWER-UP:
+            <span id="powerUpName">
+                ---
+            </span>
+
+        </div>
+
+
+        <!-- ==========================================
+             START SCREEN
+             ========================================== -->
+
+        <div
+            id="startScreen"
+            class="screen start-screen"
+        >
+
+            <div class="game-logo">
+
+                <h2>
+                    GO BRICK
+                </h2>
+
+                <h3>
+                    BREAKER
+                </h3>
+
+            </div>
+
+            <p class="game-tagline">
+                BREAK THE BRICKS • BEAT THE SCORE
+            </p>
+
+            <button
+                id="startButton"
+                class="play-button"
+            >
+                ▶ PLAY
+            </button>
+
+            <button
+                id="howToPlayButton"
+                class="how-to-play-button"
+            >
+                HOW TO PLAY
+            </button>
+
+            <div class="controls-hint">
+
+                <span>
+                    ← →
+                </span>
+
+                <span>
+                    MOVE PADDLE
+                </span>
+
+                <span>
+                    SPACE
+                </span>
+
+                <span>
+                    PAUSE
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             HOW TO PLAY SCREEN
+             ========================================== -->
+
+        <div
+            id="howToPlayScreen"
+            class="screen how-to-play-screen hidden"
+        >
+
+            <div class="how-to-play-content">
+
+                <h2>
+                    HOW TO PLAY
+                </h2>
+
+                <div class="instruction-section">
+
+                    <h3>
+                        🎮 MOVE THE PADDLE
+                    </h3>
+
+                    <p>
+                        Use the
+                        <strong>←</strong>
+                        and
+                        <strong>→</strong>
+                        arrow keys to move the paddle.
+                    </p>
+
+                </div>
+
+
+                <div class="instruction-section">
+
+                    <h3>
+                        🧱 BREAK THE BRICKS
+                    </h3>
+
+                    <p>
+                        Hit the bricks with the ball
+                        and destroy them to earn points.
+                    </p>
+
+                </div>
+
+
+                <div class="instruction-section">
+
+                    <h3>
+                        ⭐ SCORE
+                    </h3>
+
+                    <p>
+                        Destroy more bricks to increase
+                        your score and beat your best score.
+                    </p>
+
+                </div>
+
+
+                <div class="instruction-section">
+
+                    <h3>
+                        🔥 COMBO
+                    </h3>
+
+                    <p>
+                        Destroy bricks continuously to
+                        build your combo and earn more points.
+                    </p>
+
+                </div>
+
+
+                <div class="instruction-section">
+
+                    <h3>
+                        ⚡ POWER-UPS
+                    </h3>
+
+                    <p>
+                        Collect power-ups to gain special
+                        abilities and make the game easier.
+                    </p>
+
+                </div>
+
+
+                <div class="instruction-section">
+
+                    <h3>
+                        ❤️ LIVES
+                    </h3>
+
+                    <p>
+                        Don't let the ball fall below the
+                        paddle. You have limited lives.
+                    </p>
+
+                </div>
+
+
+                <div class="instruction-section">
+
+                    <h3>
+                        ⏸ PAUSE
+                    </h3>
+
+                    <p>
+                        Press <strong>SPACE</strong> or the
+                        pause button to pause the game.
+                    </p>
+
+                </div>
+
+
+                <div class="instruction-section">
+
+                    <h3>
+                        📱 MOBILE
+                    </h3>
+
+                    <p>
+                        On mobile devices, use the
+                        left and right buttons to control
+                        the paddle.
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="backButton"
+                    class="back-button"
+                >
+                    ← BACK
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             RETURN TO MENU CONFIRMATION
+             ========================================== -->
+
+        <div
+            id="menuConfirmScreen"
+            class="screen menu-confirm-screen hidden"
+        >
+
+            <div class="menu-confirm-content">
+
+                <h2>
+                    RETURN TO MENU?
+                </h2>
+
+                <p>
+                    Your current game progress
+                    will be lost.
+                </p>
+
+                <div class="menu-confirm-buttons">
+
+                    <button
+                        id="cancelMenuButton"
+                        class="cancel-menu-button"
+                    >
+                        CANCEL
+                    </button>
+
+                    <button
+                        id="confirmMenuButton"
+                        class="confirm-menu-button"
+                    >
+                        YES, MENU
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             PAUSE SCREEN
+             ========================================== -->
+
+        <div
+            id="pauseScreen"
+            class="screen hidden"
+        >
+
+            <h2>
+                GAME PAUSED
+            </h2>
+
+            <p>
+                Take a break.
+            </p>
+
+            <button id="resumeButton">
+                RESUME
+            </button>
+
+        </div>
+
+
+        <!-- ==========================================
+             GAME OVER SCREEN
+             ========================================== -->
+
+        <div
+            id="gameOverScreen"
+            class="screen hidden"
+        >
+
+            <h2>
+                GAME OVER
+            </h2>
+
+            <p>
+                Your Score:
+                <strong id="finalScore">
+                    0
+                </strong>
+            </p>
+
+            <p>
+                Best Score:
+                <strong id="gameOverHighScore">
+                    0
+                </strong>
+            </p>
+
+            <button id="restartButton">
+                PLAY AGAIN
+            </button>
+
+        </div>
+
+
+        <!-- ==========================================
+             WIN SCREEN
+             ========================================== -->
+
+        <div
+            id="winScreen"
+            class="screen hidden"
+        >
+
+            <h2>
+                LEVEL COMPLETE!
+            </h2>
+
+            <p>
+                Awesome! 🎉
+            </p>
+
+            <button id="nextLevelButton">
+                NEXT LEVEL
+            </button>
+
+        </div>
+
+
+        <!-- ==========================================
+             MOBILE CONTROLS
+             ========================================== -->
+
+        <div class="mobile-controls">
+
+            <button id="leftButton">
+                ◀
+            </button>
+
+            <button id="rightButton">
+                ▶
+            </button>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- ==========================================
+     JAVASCRIPT
+     ========================================== -->
+
+<script src="js/core.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/player.js"></script>
+<script src="js/ball.js"></script>
+<script src="js/bricks.js"></script>
+<script src="js/levels.js"></script>
+<script src="js/game.js"></script>
+
+</body>
+
+</html>
