@@ -2,6 +2,10 @@
 
 A browser-based Brick Breaker game built with HTML, CSS and JavaScript.
 
+## 🎮 Gameplay Preview
+
+![GO Brick Breaker Gameplay](Screenshot%202026-09-08%20140213.png)
+
 🔗 **Live Demo:** https://go-brick-breaker.netlify.app/
 
 ## 🎮 About
